@@ -3,7 +3,7 @@ import Disclaimer from "@/components/ui/Disclaimer";
 
 export default function AppFooter() {
   return (
-    <footer className="mt-10 border-t border-borda bg-superficie">
+    <footer className="mt-10 border-t border-borda bg-superficie pb-20">
       <div className="mx-auto max-w-2xl space-y-4 px-4 py-6">
         <Disclaimer />
         <a

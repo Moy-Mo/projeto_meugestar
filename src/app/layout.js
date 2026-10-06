@@ -1,6 +1,7 @@
 import { Nunito } from "next/font/google";
 import AppHeader from "@/components/layout/AppHeader";
 import AppFooter from "@/components/layout/AppFooter";
+import BottomNav from "@/components/layout/BottomNav";
 import { fontSizeScript } from "@/components/layout/FontSizeControl";
 import "./globals.css";
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <AppFooter />
+        <BottomNav />
       </body>
     </html>
   );
