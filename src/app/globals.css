@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Identidade visual Meu Gestar — rosa, acolhedora e acessível.
+ * Todas as combinações de texto usadas abaixo têm contraste >= 4.5:1 (WCAG AA).
+ */
+@theme {
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  --color-rosa-50: #fff1f5;
+  --color-rosa-100: #ffe3ec;
+  --color-rosa-200: #ffc7d9;
+  --color-rosa-300: #f9a0be;
+  --color-rosa-400: #ef6f9b;
+  --color-rosa-500: #e0457b;
+  --color-rosa-600: #c42d63; /* principal: texto branco 5.4:1 */
+  --color-rosa-700: #9e1f4e;
+  --color-rosa-800: #7a1a3e;
+
+  --color-fundo: #fff8fa;
+  --color-superficie: #ffffff;
+  --color-texto: #3a2430;
+  --color-texto-suave: #6b5560;
+  --color-borda: #f3d5e0;
+
+  --color-alerta-50: #fef3f2;
+  --color-alerta-200: #fecdca;
+  --color-alerta-600: #b42318;
+  --color-alerta-700: #912018;
+
+  --color-aviso-50: #fffaeb;
+  --color-aviso-200: #fedf89;
+  --color-aviso-800: #7a2e0e;
+
+  --color-sucesso-50: #ecfdf3;
+  --color-sucesso-200: #abefc6;
+  --color-sucesso-700: #067647;
+
+  --radius-cartao: 1.25rem;
+  --shadow-cartao: 0 1px 2px rgb(122 26 62 / 0.06), 0 4px 16px rgb(122 26 62 / 0.06);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Tamanho da fonte ajustável (controle "A+" no topo). Base já é maior que o padrão. */
+html {
+  font-size: 112.5%; /* 18px */
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html[data-fonte="grande"] {
+  font-size: 125%; /* 20px */
+}
+html[data-fonte="maior"] {
+  font-size: 137.5%; /* 22px */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-fundo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+/* Foco sempre visível para quem navega por teclado. */
+:focus-visible {
+  outline: 3px solid var(--color-rosa-600);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
