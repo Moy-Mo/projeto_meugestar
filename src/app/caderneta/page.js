@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChevronRight, UserRound } from "lucide-react";
-import { getCaderneta } from "@/lib/dal";
+import { redirect } from "next/navigation";
+import { getCaderneta, getPerfilAtual, PAINEL_DO_PAPEL } from "@/lib/dal";
 import { hoje } from "@/lib/datas";
 import { resumoDaGestacao } from "@/lib/gestacao";
 import { calcularLembretes } from "@/lib/lembretes";
@@ -13,8 +14,11 @@ import Callout from "@/components/ui/Callout";
 export const metadata = { title: "Minha caderneta" };
 
 export default async function CadernetaPage({ searchParams }) {
+  const perfilAtual = await getPerfilAtual();
+  if (!perfilAtual) return <Convite />;
+  // Profissional, familiar e admin têm o próprio painel.
+  if (perfilAtual.papel !== "gestante") redirect(PAINEL_DO_PAPEL[perfilAtual.papel]);
   const caderneta = await getCaderneta();
-  if (!caderneta) return <Convite />;
 
   const { "bem-vinda": bemVinda } = await searchParams;
   const dataDeHoje = hoje();
@@ -30,9 +34,19 @@ export default async function CadernetaPage({ searchParams }) {
         </Callout>
       )}
 
+      {caderneta.perfilIncompleto && (
+        <Callout variant="warning" title="Complete seu cadastro">
+          Agora pedimos também CPF, número do Cartão SUS, data de nascimento e telefone.{" "}
+          <Link href="/conta" className="font-bold underline">
+            Completar meus dados
+          </Link>
+        </Callout>
+      )}
+
       <div className="space-y-8 lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-8 lg:space-y-0">
         <MinhaGestacao
           nome={caderneta.perfil?.nome}
+          fotoUrl={caderneta.fotoUrl}
           resumo={resumo}
           altoRisco={caderneta.gestacao?.alto_risco}
         />

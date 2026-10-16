@@ -36,8 +36,11 @@ export async function updateSession(request) {
   // Checagem otimista (só a sessão no cookie). As páginas conferem de novo no
   // servidor (src/lib/dal.js) e o banco protege os dados com RLS.
   const caminho = request.nextUrl.pathname;
+  const areasLogadas = ["/caderneta/", "/ubs", "/familia", "/admin"];
   const exigeLogin =
-    caminho.startsWith("/caderneta/") || caminho === "/conta" || caminho === "/redefinir-senha";
+    areasLogadas.some((area) => caminho.startsWith(area)) ||
+    caminho === "/conta" ||
+    caminho === "/redefinir-senha";
   const soParaVisitantes = caminho === "/entrar" || caminho === "/cadastro";
 
   if (exigeLogin && !logada) {

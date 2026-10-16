@@ -2,6 +2,7 @@ import { Great_Vibes, Nunito } from "next/font/google";
 import AppHeader from "@/components/layout/AppHeader";
 import AppFooter from "@/components/layout/AppFooter";
 import BottomNav from "@/components/layout/BottomNav";
+import ContadorAcessos from "@/components/layout/ContadorAcessos";
 import { fontSizeScript } from "@/components/layout/FontSizeControl";
 import "./globals.css";
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
         </main>
         <AppFooter />
         <BottomNav />
+        <ContadorAcessos />
       </body>
     </html>
   );

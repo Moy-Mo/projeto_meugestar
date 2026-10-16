@@ -37,7 +37,7 @@ export default function PrivacidadePage() {
         <Secao titulo="O que guardamos">
           <Checklist
             items={[
-              "Seu nome, e-mail e, se você informar, telefone, data de nascimento e UBS.",
+              "Seus dados de identificação: nome, CPF, número do Cartão SUS, data de nascimento, telefone e e-mail. A UBS e a foto são opcionais.",
               "Os dados da sua gestação: data da última menstruação, data provável do parto e gestações anteriores.",
               "O que você anotar na caderneta: consultas (pressão, peso, batimentos do bebê), exames, vacinas e ultrassons.",
               "Os itens que você marcar nos checklists, como a mala da maternidade.",
@@ -48,6 +48,7 @@ export default function PrivacidadePage() {
         <Secao titulo="Para que usamos">
           <Checklist
             items={[
+              "Identificar você com segurança e evitar que a mesma pessoa tenha duas contas (CPF e Cartão SUS). Se você autorizar sua UBS, a equipe usa esses números para encontrar seu cadastro.",
               "Mostrar sua caderneta digital e calcular suas semanas de gravidez.",
               "Mostrar lembretes de vacinas, consultas e exames.",
             ]}
@@ -59,10 +60,32 @@ export default function PrivacidadePage() {
         </Secao>
 
         <Secao titulo="Quem pode ver">
+          <Checklist
+            items={[
+              "Você, quando entra com o seu e-mail e a sua senha.",
+              "A equipe da sua UBS — só se você autorizar, em \"Minha conta\". São profissionais de saúde aprovados pela administração do Meu Gestar, que podem ver sua caderneta e registrar consultas, exames e vacinas. Você vê quem abriu sua caderneta e pode retirar a autorização quando quiser.",
+              "Familiares e acompanhantes que você convidar — veem só um resumo: semanas, data provável do parto, consultas e lembretes. Não veem exames, documentos nem anotações. Você pode tirar o acesso quando quiser.",
+            ]}
+          />
           <p>
-            Só você, quando entra com o seu e-mail e a sua senha. Nesta versão, nem a equipe de
-            saúde da UBS tem acesso aos seus dados pelo app. Se isso mudar no futuro, vamos pedir a
-            sua autorização antes.
+            A administração do Meu Gestar cadastra as UBS e aprova os profissionais, mas não vê os
+            dados de saúde das gestantes. O app conta quantas vezes cada página foi aberta, sem
+            guardar quem abriu.
+          </p>
+        </Secao>
+
+        <Secao titulo="Sua foto">
+          <p>
+            A foto é opcional e só aparece para você. Antes de guardar, o app diminui a foto e apaga
+            as informações escondidas nela, como o lugar onde foi tirada.
+          </p>
+        </Secao>
+
+        <Secao titulo="Google Agenda">
+          <p>
+            Se você tocar em &quot;Adicionar ao Google Agenda&quot;, o nome da consulta, a data, o
+            horário e o nome da sua UBS vão para o Google, para criar o lembrete na sua agenda.
+            Nada é enviado se você não tocar no botão.
           </p>
         </Secao>
 

@@ -1,4 +1,5 @@
-import { BookMarked, ExternalLink, Phone } from "lucide-react";
+import { BookMarked, Clock, ExternalLink, MapPin, Phone } from "lucide-react";
+import { formatarTelefone } from "@/lib/documentos";
 import { ContentIcon, getIcon } from "@/content/icons";
 import Badge from "@/components/ui/Badge";
 import Callout from "@/components/ui/Callout";
@@ -167,6 +168,64 @@ export function Sources({ items }) {
   );
 }
 
+/**
+ * Unidades de saúde: nome, endereço, horário, botões de ligar e "Ver no mapa".
+ * `telefones` vêm só com dígitos (ex.: "6939012838").
+ * O mapa abre no Google Maps só se a pessoa tocar (busca pelo nome + endereço).
+ */
+function Locais({ items }) {
+  return (
+    <ul className="space-y-3">
+      {items.map((local) => {
+        const mapa = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+          `${local.nome}, ${local.endereco}, Porto Velho - RO`,
+        )}`;
+        return (
+          <li
+            key={local.nome}
+            className={`rounded-cartao border-2 bg-superficie p-4 shadow-cartao ${local.destaque ? "border-rosa-300" : "border-borda"}`}
+          >
+            <h3 className="text-lg font-extrabold text-rosa-800">{local.nome}</h3>
+            {local.descricao && <p className="mt-1">{local.descricao}</p>}
+            <p className="mt-2 flex items-start gap-1.5 text-texto-suave">
+              <MapPin aria-hidden="true" className="mt-1 size-4 shrink-0 text-rosa-600" />
+              {local.endereco}
+            </p>
+            {local.horario && (
+              <p className="mt-1 flex items-start gap-1.5 text-texto-suave">
+                <Clock aria-hidden="true" className="mt-1 size-4 shrink-0 text-rosa-600" />
+                {local.horario}
+              </p>
+            )}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {(local.telefones ?? []).map((tel) => (
+                <a
+                  key={tel}
+                  href={`tel:+55${tel}`}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full bg-rosa-600 px-4 font-bold text-white hover:bg-rosa-700"
+                >
+                  <Phone aria-hidden="true" className="size-4" />
+                  {formatarTelefone(tel)}
+                </a>
+              ))}
+              <a
+                href={mapa}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-rosa-300 px-4 font-bold text-rosa-700 hover:bg-rosa-50"
+              >
+                <MapPin aria-hidden="true" className="size-4" />
+                Ver no mapa
+                <span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 function Levels({ items }) {
   return (
     <ul className="space-y-2 rounded-cartao border border-borda bg-superficie p-4 shadow-cartao">
@@ -248,6 +307,8 @@ function renderBlock(block) {
           }))}
         />
       );
+    case "locais":
+      return <Locais items={block.items} />;
     case "levels":
       return <Levels items={block.items} />;
     case "myths":

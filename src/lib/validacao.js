@@ -26,6 +26,9 @@ export function validarCampos(campos, formData) {
     if (campo.tipo === "date") {
       if (!dataValida(bruto)) erros[campo.nome] = "Informe uma data válida.";
       else dados[campo.nome] = bruto;
+    } else if (campo.tipo === "time") {
+      if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(bruto.slice(0, 5))) erros[campo.nome] = "Informe um horário válido.";
+      else dados[campo.nome] = bruto.slice(0, 5);
     } else if (campo.tipo === "number") {
       const numero = Number(bruto.replace(",", "."));
       if (!Number.isFinite(numero)) erros[campo.nome] = "Digite só números.";

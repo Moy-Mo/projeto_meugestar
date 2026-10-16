@@ -1,10 +1,10 @@
-import { exigirUsuario, getCaderneta } from "@/lib/dal";
+import { exigirPapel, getCaderneta } from "@/lib/dal";
 import { FormGestacao } from "@/components/forms/FormsCaderneta";
 
 export const metadata = { title: "Dados da gestação" };
 
 export default async function GestacaoPage() {
-  await exigirUsuario("/caderneta/gestacao");
+  await exigirPapel(["gestante"], "/caderneta/gestacao");
   const { gestacao } = await getCaderneta();
 
   return (

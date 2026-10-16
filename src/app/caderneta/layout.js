@@ -1,11 +1,11 @@
-import { getUsuario } from "@/lib/dal";
+import { getPerfilAtual } from "@/lib/dal";
 import AbasCaderneta from "@/components/caderneta/AbasCaderneta";
 
 export default async function CadernetaLayout({ children }) {
-  const usuario = await getUsuario();
+  const perfil = await getPerfilAtual();
   return (
     <div className="lg:mx-auto lg:max-w-4xl">
-      {usuario && <AbasCaderneta />}
+      {perfil?.papel === "gestante" && <AbasCaderneta />}
       {children}
     </div>
   );

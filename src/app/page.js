@@ -17,7 +17,6 @@ import {
   HeartPulse,
   MapPin,
   NotebookPen,
-  Pill,
   Salad,
   Siren,
   Syringe,
@@ -84,20 +83,14 @@ const assuntos = [
   {
     href: "/temas/alimentacao",
     icon: Salad,
-    title: "Alimentação adequada",
-    description: "Como se alimentar bem na gravidez",
-  },
-  {
-    href: "/temas/medicamentos",
-    icon: Pill,
-    title: "Medicamentos na gestação",
-    description: "Cuidados com remédios",
+    title: "Alimentação na gestação",
+    description: "Mitos e verdades e o que comer",
   },
   {
     href: "/temas/onde-ser-atendida",
     icon: MapPin,
     title: "Onde ser atendida",
-    description: "Maternidades e emergências",
+    description: "Maternidade e pronto atendimento em Porto Velho",
   },
   {
     href: "/caderneta",

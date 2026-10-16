@@ -6,7 +6,8 @@
  * Campo: { nome, rotulo, tipo: "date" | "number" | "text" | "textarea",
  *          obrigatorio?, min?, max?, inteiro?, maxLength?, dica?, sufixo? }
  */
-export const VERSAO_TERMO = "2026-10-v1";
+// Mude a versão sempre que o termo de uso de dados (/privacidade) mudar.
+export const VERSAO_TERMO = "2026-10-v3";
 
 const observacoes = {
   nome: "observacoes",
@@ -27,6 +28,7 @@ export const registros = {
     campoData: "data",
     campos: [
       { nome: "data", rotulo: "Data da consulta", tipo: "date", obrigatorio: true },
+      { nome: "hora", rotulo: "Horário", tipo: "time", dica: "Opcional. Ajuda a lembrar no Google Agenda." },
       { nome: "peso_kg", rotulo: "Peso", tipo: "number", min: 25, max: 300, sufixo: "kg", passo: "0.1" },
       { nome: "pa_sistolica", rotulo: "Pressão — número de cima", tipo: "number", min: 50, max: 260, inteiro: true, sufixo: "mmHg", dica: "Ex.: em 12 por 8 (120/80), é 120." },
       { nome: "pa_diastolica", rotulo: "Pressão — número de baixo", tipo: "number", min: 30, max: 180, inteiro: true, sufixo: "mmHg", dica: "Ex.: em 12 por 8 (120/80), é 80." },
@@ -45,6 +47,7 @@ export const registros = {
     campos: [
       { nome: "nome", rotulo: "Nome do exame", tipo: "text", obrigatorio: true, maxLength: 120, lista: "lista-exames", dica: "Ex.: Hemograma, Glicemia, Urocultura…" },
       { nome: "data", rotulo: "Data", tipo: "date", obrigatorio: true },
+      { nome: "hora", rotulo: "Horário", tipo: "time", dica: "Opcional. Ajuda a lembrar no Google Agenda." },
       { nome: "resultado", rotulo: "Resultado", tipo: "text", maxLength: 500 },
       observacoes,
     ],
@@ -88,6 +91,7 @@ export const sugestoes = {
     "Hemograma", "Tipo de sangue e fator Rh", "Coombs indireto", "Glicemia",
     "Teste de tolerância à glicose (TOTG 75 g)", "Sífilis", "HIV", "Hepatite B (HBsAg)",
     "Hepatite C", "Toxoplasmose", "Urina e urocultura", "Eletroforese de hemoglobina", "TSH (tireoide)",
+    "Avaliação de pré-eclâmpsia", "Ultrassonografia obstétrica",
   ],
   "lista-vacinas": [
     "Hepatite B", "dT (difteria e tétano)", "Influenza (gripe)", "COVID-19", "dTpa",

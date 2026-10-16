@@ -283,9 +283,17 @@ export const topicos = [
             text: "Mostra como está a tireoide. Não é pedido para todas as gestantes, só quando há sintomas ou histórico.",
           },
           {
+            name: "Pré-eclâmpsia (pressão arterial)",
+            // Textos do guia: telas "Pré-eclâmpsia" e "Exames na gestação de alto risco".
+            text: "O principal sinal da pré-eclâmpsia é a pressão alta. Por isso a pressão é medida em todas as consultas: assim as alterações são descobertas cedo. Quando há pressão alta, a equipe pode pedir exames para ver os rins, a urina, o sangue (plaquetas), as enzimas do fígado, o crescimento do bebê e a circulação do sangue (Doppler).",
+            href: "/pre-natal/pre-eclampsia",
+            icone: "pressao",
+          },
+          {
             name: "Ultrassonografia obstétrica",
             text: "Avalia a localização, crescimento, anatomia fetal, placenta, líquido amniótico e outras situações.",
             href: "/pre-natal/ultrassonografia-obstetrica",
+            icone: "ultrassom",
           },
         ],
       },

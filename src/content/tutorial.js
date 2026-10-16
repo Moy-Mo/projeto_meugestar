@@ -2,7 +2,10 @@
 // cadastro na aba inicial"). Usado na tela inicial e na tela de cadastro.
 export const passosCadastro = [
   { title: "Toque em \"Caderneta\", na barra de baixo", content: "Depois, toque em \"Criar minha conta\"." },
-  { title: "Escreva seu nome", content: "O telefone e a UBS ajudam, mas são opcionais." },
+  {
+    title: "Preencha seus dados",
+    content: "Nome, CPF, número do Cartão SUS, data de nascimento e telefone. A foto e a UBS são opcionais.",
+  },
   {
     title: "Coloque a data da última menstruação, se souber",
     content: "Com ela, o app calcula suas semanas de gravidez. Pode preencher depois.",

@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, FlaskConical, ScanLine, Search } from "lucide-react";
+import { Activity, ChevronRight, FlaskConical, ScanLine, Search } from "lucide-react";
 import Expandable from "@/components/ui/Expandable";
+
+const ICONES = { pressao: Activity, ultrassom: ScanLine };
 
 // Remove acentos para "sifilis" achar "Sífilis".
 function normalize(text) {
@@ -48,7 +50,7 @@ export default function ExamSearch({ items }) {
       {filtered.map((item) => (
         <Expandable
           key={item.name}
-          icon={item.href ? ScanLine : FlaskConical}
+          icon={ICONES[item.icone] ?? FlaskConical}
           title={item.name}
         >
           <p>{item.text}</p>

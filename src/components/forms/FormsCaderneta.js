@@ -6,8 +6,9 @@ import { salvarGestacao, removerRegistro } from "@/lib/actions/caderneta";
 import { registros, sugestoes } from "@/lib/caderneta-config";
 import { Aviso, BotaoEnviar, Campo } from "./Campos";
 
-export function FormGestacao({ gestacao }) {
-  const [estado, acao] = useActionState(salvarGestacao, null);
+/** Dados da gestação. `acao`: da própria gestante (padrão) ou do profissional da UBS. */
+export function FormGestacao({ gestacao, acao: acaoServidor = salvarGestacao, daGestante = true }) {
+  const [estado, acao] = useActionState(acaoServidor, null);
   const v = estado?.valores ?? gestacao ?? {};
   const e = estado?.erros ?? {};
 
@@ -46,7 +47,11 @@ export function FormGestacao({ gestacao }) {
           defaultChecked={Boolean(v.alto_risco)}
           className="mt-1 size-6 shrink-0 accent-rosa-600"
         />
-        <span>A equipe de saúde classificou minha gestação como de alto risco.</span>
+        <span>
+          {daGestante
+            ? "A equipe de saúde classificou minha gestação como de alto risco."
+            : "Gestação classificada como de alto risco."}
+        </span>
       </label>
       <Aviso estado={estado} />
       <BotaoEnviar carregando="Salvando…">Salvar</BotaoEnviar>
@@ -137,8 +142,8 @@ export function FormRegistro({ tipo, acao: acaoServidor }) {
   );
 }
 
-/** Botão de apagar um registro, com confirmação. */
-export function BotaoRemover({ tipo, id, descricao }) {
+/** Botão de apagar um registro, com confirmação. `acao(tipo, id)`: da gestante (padrão) ou do profissional. */
+export function BotaoRemover({ tipo, id, descricao, acao = removerRegistro }) {
   const [pendente, iniciar] = useTransition();
   return (
     <button
@@ -146,7 +151,7 @@ export function BotaoRemover({ tipo, id, descricao }) {
       disabled={pendente}
       onClick={() => {
         if (window.confirm(`Apagar ${descricao}? Isto não pode ser desfeito.`)) {
-          iniciar(() => removerRegistro(tipo, id));
+          iniciar(() => acao(tipo, id));
         }
       }}
       aria-label={`Apagar ${descricao}`}

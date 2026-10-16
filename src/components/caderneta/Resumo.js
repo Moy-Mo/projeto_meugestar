@@ -12,9 +12,22 @@ const FASES = {
   3: "Amadurecimento dos órgãos e preparação para o nascimento.",
 };
 
-/** "Minha gestação": semanas, trimestre, DPP e uma barra de progresso até 40 semanas. */
-export function MinhaGestacao({ nome, resumo, altoRisco }) {
+/**
+ * "Minha gestação": semanas, trimestre, DPP e uma barra de progresso até 40 semanas.
+ * `daGestante`: true quando é a própria gestante vendo ("Olá, Ana! Você está com…");
+ * false para familiar e profissional ("Ana está com…").
+ */
+export function MinhaGestacao({ nome, fotoUrl, resumo, altoRisco, daGestante = true }) {
   const primeiroNome = nome?.split(" ")[0];
+
+  if (!resumo && !daGestante) {
+    return (
+      <section className="rounded-cartao bg-rosa-50 p-5">
+        <h2 className="text-xl font-extrabold text-rosa-800">{nome}</h2>
+        <p className="mt-2 text-texto-suave">Ainda sem a data da última menstruação ou do ultrassom.</p>
+      </section>
+    );
+  }
 
   if (!resumo) {
     return (
@@ -46,9 +59,20 @@ export function MinhaGestacao({ nome, resumo, altoRisco }) {
     >
       <Galho className="pointer-events-none absolute -right-6 -top-6 h-40 rotate-12 text-rosa-200/80" />
       <div className="relative flex items-center gap-4">
-        <GestanteArco semente={ig.semanas} sizes="80px" className="h-28 w-20 shrink-0" />
+        {fotoUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element -- link temporário do Storage privado
+          <img
+            src={fotoUrl}
+            alt=""
+            className="size-24 shrink-0 rounded-full object-cover ring-4 ring-superficie shadow-cartao"
+          />
+        ) : (
+          <GestanteArco semente={ig.semanas} sizes="80px" className="h-28 w-20 shrink-0" />
+        )}
         <div className="min-w-0">
-          <p className="text-sm font-bold text-rosa-700">Olá{primeiroNome ? `, ${primeiroNome}` : ""}! Você está com</p>
+          <p className="text-sm font-bold text-rosa-700">
+            {daGestante ? `Olá${primeiroNome ? `, ${primeiroNome}` : ""}! Você está com` : `${nome} está com`}
+          </p>
           <h2 id="minha-gestacao" className="text-3xl font-extrabold leading-tight text-rosa-800">
             {formatarIG(ig)}
           </h2>
@@ -120,12 +144,12 @@ const ESTILO = {
 };
 
 /** "Meus lembretes": notificações pendentes da gestante. */
-export function MeusLembretes({ lembretes }) {
+export function MeusLembretes({ lembretes, titulo = "Meus lembretes", id = "lembretes", soLinksDoGuia = false }) {
   return (
-    <section id="lembretes" aria-labelledby="titulo-lembretes" className="scroll-mt-24 space-y-3">
-      <h2 id="titulo-lembretes" className="flex items-center gap-2 text-xl font-extrabold text-rosa-800">
+    <section id={id} aria-labelledby={`titulo-${id}`} className="scroll-mt-24 space-y-3">
+      <h2 id={`titulo-${id}`} className="flex items-center gap-2 text-xl font-extrabold text-rosa-800">
         <Bell aria-hidden="true" className="size-6 text-rosa-600" />
-        Meus lembretes
+        {titulo}
         {lembretes.length > 0 && (
           <span className="rounded-full bg-rosa-600 px-2.5 text-sm text-white">{lembretes.length}</span>
         )}
@@ -140,17 +164,29 @@ export function MeusLembretes({ lembretes }) {
           {lembretes.map((l) => {
             const e = ESTILO[l.nivel];
             const Icone = e.icone;
+            // Quem não é a gestante não abre as páginas da caderneta dela; os links do guia valem.
+            const href = soLinksDoGuia && l.href.startsWith("/caderneta") ? null : l.href;
+            const conteudo = (
+              <>
+                <Icone aria-hidden="true" className={`mt-0.5 size-6 shrink-0 ${e.corIcone}`} />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs font-extrabold uppercase tracking-wide text-texto-suave">{e.selo}</span>
+                  <span className="block font-extrabold">{l.titulo}</span>
+                  <span className="block text-sm">{l.texto}</span>
+                </span>
+                {href && <ChevronRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-rosa-500" />}
+              </>
+            );
+            const classe = `flex gap-3 rounded-cartao border-2 p-4 ${e.cor}`;
             return (
               <li key={l.id}>
-                <Link href={l.href} className={`flex gap-3 rounded-cartao border-2 p-4 hover:shadow-cartao ${e.cor}`}>
-                  <Icone aria-hidden="true" className={`mt-0.5 size-6 shrink-0 ${e.corIcone}`} />
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-xs font-extrabold uppercase tracking-wide text-texto-suave">{e.selo}</span>
-                    <span className="block font-extrabold">{l.titulo}</span>
-                    <span className="block text-sm">{l.texto}</span>
-                  </span>
-                  <ChevronRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-rosa-500" />
-                </Link>
+                {href ? (
+                  <Link href={href} className={`${classe} hover:shadow-cartao`}>
+                    {conteudo}
+                  </Link>
+                ) : (
+                  <div className={classe}>{conteudo}</div>
+                )}
               </li>
             );
           })}
