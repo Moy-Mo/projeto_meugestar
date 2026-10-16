@@ -736,6 +736,152 @@ export const topicos = [
         title: "Você não está sozinha",
         text: "Fale com a equipe de saúde da sua UBS. Se for preciso, ela encaminha você para um apoio especializado.",
       },
+      {
+        type: "topicLink",
+        href: "/pre-natal/saude-mental-dia-a-dia",
+        icon: "sun",
+        title: "Cuidados no dia a dia",
+        description: "5 práticas simples para o seu bem-estar",
+      },
+    ],
+    videos: [],
+  },
+  {
+    slug: "saude-mental-dia-a-dia",
+    group: "cuidados",
+    icon: "sun",
+    title: "Saúde mental: cuidados no dia a dia",
+    summary: "5 práticas simples para o seu bem-estar",
+    intro:
+      "Além de conversar sobre o que sente e buscar ajuda quando precisar, pequenos hábitos do dia a dia ajudam a cuidar da sua saúde mental e do seu bem-estar durante a gravidez. Toque em cada prática para ver o que fazer e para que serve.",
+    blocks: [
+      {
+        type: "expandables",
+        items: [
+          {
+            icon: "footprints",
+            title: "1. Movimento suave",
+            subtitle: "Atividade física leve",
+            items: [
+              "Faça caminhada em um ritmo confortável, por mais ou menos 30 minutos por dia, ou de acordo com o que o seu corpo aguenta.",
+              "Outras opções: hidroginástica (ginástica na água), alongamentos, ioga ou pilates para gestantes.",
+            ],
+            footer:
+              "Para que serve: o movimento libera as endorfinas (os \"hormônios do bem-estar\"), diminui a ansiedade, melhora a circulação do sangue (o que ajuda a reduzir o inchaço nas pernas) e prepara o corpo para o parto.",
+            note: "Antes de começar, converse com a equipe do seu pré-natal para confirmar que você não tem nenhum motivo para evitar exercícios.",
+          },
+          {
+            icon: "sun",
+            title: "2. Banho de sol seguro",
+            items: [
+              "Melhores horários: de manhã cedo (até as 10h) ou no fim da tarde (depois das 16h).",
+              "Quanto tempo: de 15 a 20 minutos por dia, com os braços e as pernas de fora. Passe protetor solar no rosto para evitar manchas (melasma).",
+            ],
+            footer:
+              "Para que serve: o sol ajuda o corpo a produzir a vitamina D, importante para a defesa do corpo e para fixar o cálcio nos ossos do bebê. Também ajuda a acertar o \"relógio do corpo\", o que melhora o sono e diminui o estresse.",
+          },
+          {
+            icon: "wind",
+            title: "3. Respiração consciente e relaxamento",
+            subtitle: "Respiração com a barriga (técnica 4-2-6)",
+            numbered: true,
+            items: [
+              "Sente-se confortável, com a coluna reta e uma mão sobre a barriga.",
+              "Puxe o ar devagar pelo nariz, contando até 4.",
+              "Segure o ar por 2 segundos.",
+              "Solte o ar aos poucos pela boca, contando até 6.",
+            ],
+            footer:
+              "Para que serve: ativa o sistema de relaxamento do corpo, acalma o coração nos momentos de ansiedade e alivia a tensão dos músculos.",
+          },
+          {
+            icon: "moon",
+            title: "4. Sono tranquilo e menos tempo de tela",
+            items: [
+              "Crie um ritual para desacelerar à noite: diminua as luzes da casa e evite celular e televisão pelo menos 1 hora antes de dormir.",
+              "Deite de lado, de preferência do lado esquerdo, com um travesseiro entre os joelhos para ficar mais confortável.",
+            ],
+            footer:
+              "Para que serve: ajuda a evitar a insônia da gravidez e diminui o cansaço do corpo e a irritação.",
+          },
+          {
+            icon: "users",
+            title: "5. Rede de afeto e momentos de desabafo",
+            items: [
+              "Converse sobre as suas inseguranças com o(a) parceiro(a), com familiares ou com amigas de confiança.",
+              "Participar de grupos de gestantes na UBS (postinho de saúde) também ajuda: você percebe que muitos medos são compartilhados.",
+            ],
+          },
+        ],
+      },
+      {
+        type: "callout",
+        variant: "info",
+        text: "\"Cuidar de você não é egoísmo, é o primeiro ato de amor pelo seu bebê.\"",
+      },
+      {
+        type: "sources",
+        items: [
+          {
+            text: "IFF/Fiocruz; FEBRASGO. Manual de Assistência Pré-natal. Rio de Janeiro: Fiocruz, 2019.",
+            href: "https://portaldeboaspraticas.iff.fiocruz.br/",
+          },
+          {
+            text: "Revista Brasileira de Ginecologia e Obstetrícia (RBGO). Recomendações para a prática de exercício físico na gravidez. SciELO, 2021.",
+            href: "https://www.scielo.br/j/rbgo/",
+          },
+          { text: "Fiocruz. Cartilha de Orientação à Trabalhadora Gestante. Rio de Janeiro: Fiocruz, 2021." },
+          {
+            text: "Ministério da Saúde. Saúde Mental.",
+            href: "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-mental",
+          },
+        ],
+      },
+    ],
+    videos: [],
+  },
+  {
+    slug: "sexualidade-e-rede-de-apoio",
+    group: "cuidados",
+    icon: "users",
+    title: "Sexualidade na gestação e rede de apoio",
+    summary: "Intimidade, diálogo e as pessoas que cuidam de você",
+    intro:
+      "A sexualidade saudável e uma rede de apoio acolhedora contribuem para o bem-estar físico e emocional da gestante.",
+    blocks: [
+      {
+        type: "card",
+        icon: "heart",
+        title: "Sexualidade na gestação",
+        text: "A sexualidade durante a gravidez envolve aspectos físicos, emocionais e afetivos que podem influenciar o desejo sexual e a intimidade do casal. Cada mulher vivencia esse período de maneira diferente, por isso é importante respeitar seus sentimentos e necessidades.",
+        items: [
+          "Mudanças físicas e hormonais: podem provocar alterações na libido, sensibilidade corporal e disposição.",
+          "Aspectos emocionais: ansiedade, insegurança e medo podem influenciar a intimidade.",
+          "Relações sexuais: geralmente são seguras em gestações sem complicações, desde que não existam contraindicações médicas.",
+          "Diálogo e respeito: a comunicação entre o casal é fundamental para compreender desejos, limites e necessidades.",
+          "Acompanhamento pré-natal: permite esclarecer dúvidas e receber orientações seguras sobre sexualidade durante a gravidez.",
+        ],
+      },
+      {
+        type: "card",
+        icon: "users",
+        title: "Rede de apoio na gestação",
+        text: "A rede de apoio é composta por pessoas e profissionais que oferecem suporte emocional, físico e social à gestante. Esse apoio é essencial para promover segurança, acolhimento e qualidade de vida durante a gravidez e após o nascimento do bebê.",
+        items: [
+          "Família e amigos: oferecem carinho, companhia e ajuda nas tarefas cotidianas.",
+          "Parceiro ou parceira: participa das consultas, compartilha responsabilidades e oferece apoio emocional.",
+          "Profissionais de saúde: orientam sobre os cuidados pré-natais e auxiliam na identificação de necessidades físicas e emocionais.",
+          "Saúde mental: o acolhimento pode reduzir a ansiedade, a solidão e a sobrecarga emocional.",
+          "Respeito à autonomia: a gestante deve ter suas escolhas, sentimentos e necessidades respeitados.",
+          "Apoio no pós-parto: a ajuda com o bebê e as tarefas diárias continua sendo importante após o nascimento.",
+        ],
+      },
+      {
+        type: "callout",
+        variant: "info",
+        title: "Por que esses temas são importantes?",
+        text: "O acesso à informação, o respeito, o diálogo e o acompanhamento profissional ajudam a tornar a gestação uma experiência mais segura, humanizada e tranquila.",
+      },
     ],
     videos: [],
   },
@@ -882,6 +1028,13 @@ export const topicos = [
       },
       {
         type: "topicLink",
+        href: "/parto/preparando-se-para-o-parto",
+        icon: "briefcase-medical",
+        title: "Preparação para o parto e mala da maternidade",
+        description: "Checklists para se organizar com calma",
+      },
+      {
+        type: "topicLink",
         href: "/temas/onde-ser-atendida",
         icon: "map-pin",
         title: "Encontrar maternidades e emergências",
@@ -947,7 +1100,13 @@ export const topicos = [
         title: "Dica",
         text: "Mantenha os dados sempre atualizados. Eles ajudam a equipe de saúde a acompanhar a sua gravidez.",
       },
-      { type: "comingSoon", label: "Acessar minha caderneta digital" },
+      {
+        type: "topicLink",
+        href: "/caderneta",
+        icon: "notebook-pen",
+        title: "Acessar minha caderneta digital",
+        description: "Crie sua conta ou entre para registrar",
+      },
     ],
     videos: [],
   },
@@ -988,6 +1147,12 @@ export const topicos = [
   },
 ];
 
-export function getTopico(slug) {
-  return topicos.find((t) => t.slug === slug);
-}
+export const preNatal = {
+  id: "pre-natal",
+  basePath: "/pre-natal",
+  icon: "heart-pulse",
+  title: "Pré-natal e Acompanhamento",
+  intro: "Tudo sobre a gestação em palavras simples. Toque em um assunto para abrir.",
+  grupos,
+  topicos,
+};

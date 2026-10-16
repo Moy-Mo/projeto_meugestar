@@ -3,8 +3,16 @@ import { ChevronDown } from "lucide-react";
 /**
  * Cartão que abre e fecha ao tocar. Usa <details>/<summary> nativos:
  * funciona sem JavaScript e é lido corretamente por leitores de tela.
+ * `badge`: selo opcional mostrado acima do título.
  */
-export default function Expandable({ icon: Icon, title, subtitle, defaultOpen = false, children }) {
+export default function Expandable({
+  icon: Icon,
+  title,
+  subtitle,
+  badge,
+  defaultOpen = false,
+  children,
+}) {
   return (
     <details
       open={defaultOpen}
@@ -20,6 +28,7 @@ export default function Expandable({ icon: Icon, title, subtitle, defaultOpen = 
           </span>
         )}
         <span className="min-w-0 flex-1">
+          {badge && <span className="mb-1 block">{badge}</span>}
           <span className="block font-bold leading-snug">{title}</span>
           {subtitle && <span className="block text-sm text-texto-suave">{subtitle}</span>}
         </span>

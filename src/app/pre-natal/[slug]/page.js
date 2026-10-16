@@ -1,24 +1,26 @@
 import { notFound } from "next/navigation";
-import { getTopico, topicos } from "@/content/pre-natal";
+import { areas, getTopico } from "@/content/areas";
 import TopicView from "@/components/content/TopicView";
+
+const area = areas.preNatal;
 
 // Só os assuntos conhecidos existem; qualquer outro endereço vira 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return topicos.map((t) => ({ slug: t.slug }));
+  return area.topicos.map((t) => ({ slug: t.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const topico = getTopico(slug);
-  return topico ? { title: topico.title, description: topico.intro } : {};
+  const topico = getTopico(area, slug);
+  return topico ? { title: topico.title, description: topico.summary } : {};
 }
 
 export default async function TopicoPage({ params }) {
   const { slug } = await params;
-  const topico = getTopico(slug);
+  const topico = getTopico(area, slug);
   if (!topico) notFound();
 
-  return <TopicView topic={topico} backHref="/pre-natal" backLabel="Pré-natal" />;
+  return <TopicView topic={topico} backHref={area.basePath} backLabel="Pré-natal" />;
 }

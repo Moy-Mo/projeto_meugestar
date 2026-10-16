@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { HeartPulse, House, NotebookPen, Siren } from "lucide-react";
 
 const ALERTA = "/pre-natal/sinais-de-alerta";
-const CADERNETA = "/pre-natal/minha-caderneta";
+const CADERNETA = "/caderneta";
 
 const items = [
   { href: "/", label: "Início", icon: House, match: (p) => p === "/" },
@@ -13,10 +13,10 @@ const items = [
     href: "/pre-natal",
     label: "Pré-natal",
     icon: HeartPulse,
-    match: (p) => p.startsWith("/pre-natal") && p !== ALERTA && p !== CADERNETA,
+    match: (p) => p.startsWith("/pre-natal") && p !== ALERTA,
   },
   { href: ALERTA, label: "Alerta", icon: Siren, match: (p) => p === ALERTA, danger: true },
-  { href: CADERNETA, label: "Caderneta", icon: NotebookPen, match: (p) => p === CADERNETA },
+  { href: CADERNETA, label: "Caderneta", icon: NotebookPen, match: (p) => p.startsWith(CADERNETA) || p === "/conta" },
 ];
 
 /** Barra de navegação fixa no rodapé da tela (padrão de app no celular). */
@@ -26,7 +26,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="Navegação principal"
-      className="fixed inset-x-0 bottom-0 z-10 border-t border-borda bg-superficie/95 pb-[env(safe-area-inset-bottom)] backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-10 border-t lg:hidden border-borda bg-superficie/95 pb-[env(safe-area-inset-bottom)] backdrop-blur"
     >
       <ul className="mx-auto flex max-w-2xl">
         {items.map(({ href, label, icon: Icon, match, danger }) => {

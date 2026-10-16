@@ -1,27 +1,33 @@
 @import "tailwindcss";
 
 /*
- * Identidade visual Meu Gestar — rosa, acolhedora e acessível.
- * Todas as combinações de texto usadas abaixo têm contraste >= 4.5:1 (WCAG AA).
+ * Identidade visual Meu Gestar — rosa antigo da logo, acolhedora e acessível.
+ * Cores tiradas da logo: fundo creme #fdf2ee, folhas #d7908e, vestido #e4a59e, texto #8a4442.
+ * Contraste conferido: texto >= 4.5:1 e ícones >= 3:1 (WCAG AA).
  */
 @theme {
   --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-great-vibes), cursive; /* só a marca "Gestar" */
 
-  --color-rosa-50: #fff1f5;
-  --color-rosa-100: #ffe3ec;
-  --color-rosa-200: #ffc7d9;
-  --color-rosa-300: #f9a0be;
-  --color-rosa-400: #ef6f9b;
-  --color-rosa-500: #e0457b;
-  --color-rosa-600: #c42d63; /* principal: texto branco 5.4:1 */
-  --color-rosa-700: #9e1f4e;
-  --color-rosa-800: #7a1a3e;
+  --color-rosa-50: #f9e7e2;
+  --color-rosa-100: #f5dcd5;
+  --color-rosa-200: #edc3bb;
+  --color-rosa-300: #e4a59e; /* vestido da logo */
+  --color-rosa-400: #d7908e; /* folhas da logo */
+  --color-rosa-500: #b86a6f;
+  --color-rosa-600: #a64e58; /* principal: texto branco 5.45:1 */
+  --color-rosa-700: #8a4442; /* texto da logo: 6.4:1 no fundo */
+  --color-rosa-800: #6b3236;
 
-  --color-fundo: #fff8fa;
+  /* Verde-sálvia das folhas das ilustrações — só para enfeites. */
+  --color-salvia-200: #d5ddcf;
+  --color-salvia-400: #a7b59d;
+
+  --color-fundo: #fdf2ee; /* mesmo creme da logo */
   --color-superficie: #ffffff;
-  --color-texto: #3a2430;
-  --color-texto-suave: #6b5560;
-  --color-borda: #f3d5e0;
+  --color-texto: #3d2a2c;
+  --color-texto-suave: #6b5558;
+  --color-borda: #f0d8d1;
 
   --color-alerta-50: #fef3f2;
   --color-alerta-200: #fecdca;
@@ -37,7 +43,34 @@
   --color-sucesso-700: #067647;
 
   --radius-cartao: 1.25rem;
-  --shadow-cartao: 0 1px 2px rgb(122 26 62 / 0.06), 0 4px 16px rgb(122 26 62 / 0.06);
+  --radius-arco: 999px 999px 1.25rem 1.25rem; /* moldura em arco, como os cartões das ilustrações */
+  --shadow-cartao: 0 1px 2px rgb(107 50 54 / 0.06), 0 4px 16px rgb(107 50 54 / 0.07);
+
+  --animate-flutuar: flutuar 6s ease-in-out infinite;
+  --animate-desfile: desfile 40s linear infinite;
+  --animate-surgir: surgir 0.6s ease-out both;
+
+  @keyframes flutuar {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-6px) rotate(3deg);
+    }
+  }
+  /* Faixa das gestantes: a lista vem duplicada, então -50% fecha o laço sem "pulo". */
+  @keyframes desfile {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes surgir {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
 }
 
 /* Tamanho da fonte ajustável (controle "A+" no topo). Base já é maior que o padrão. */
@@ -69,6 +102,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important; /* evita "piscar" nas animações infinitas */
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }

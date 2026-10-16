@@ -30,7 +30,31 @@ export async function updateSession(request) {
 
   // Não coloque código entre createServerClient e getClaims: isso causa
   // sessões que expiram sem motivo aparente.
-  await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
+  const logada = Boolean(data?.claims);
+
+  // Checagem otimista (só a sessão no cookie). As páginas conferem de novo no
+  // servidor (src/lib/dal.js) e o banco protege os dados com RLS.
+  const caminho = request.nextUrl.pathname;
+  const exigeLogin =
+    caminho.startsWith("/caderneta/") || caminho === "/conta" || caminho === "/redefinir-senha";
+  const soParaVisitantes = caminho === "/entrar" || caminho === "/cadastro";
+
+  if (exigeLogin && !logada) {
+    const url = new URL("/entrar", request.url);
+    url.searchParams.set("voltar", caminho);
+    return redirecionarMantendoCookies(url, response);
+  }
+  if (soParaVisitantes && logada) {
+    return redirecionarMantendoCookies(new URL("/caderneta", request.url), response);
+  }
 
   return response;
+}
+
+// O redirecionamento precisa levar os cookies de sessão que o Supabase acabou de renovar.
+function redirecionarMantendoCookies(url, response) {
+  const redirecionamento = NextResponse.redirect(url);
+  response.cookies.getAll().forEach((cookie) => redirecionamento.cookies.set(cookie));
+  return redirecionamento;
 }

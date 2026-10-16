@@ -1,4 +1,4 @@
-import { Nunito } from "next/font/google";
+import { Great_Vibes, Nunito } from "next/font/google";
 import AppHeader from "@/components/layout/AppHeader";
 import AppFooter from "@/components/layout/AppFooter";
 import BottomNav from "@/components/layout/BottomNav";
@@ -7,6 +7,13 @@ import "./globals.css";
 
 const nunito = Nunito({
   variable: "--font-nunito",
+  subsets: ["latin"],
+});
+
+// Caligrafia parecida com o "Gestar" da logo — só para a marca, nunca para textos de leitura.
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -21,12 +28,12 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#c42d63",
+  themeColor: "#fdf2ee",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${nunito.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="pt-BR" className={`${nunito.variable} ${greatVibes.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: fontSizeScript }} />
       </head>
@@ -38,7 +45,7 @@ export default function RootLayout({ children }) {
           Pular para o conteúdo
         </a>
         <AppHeader />
-        <main id="conteudo" className="mx-auto w-full max-w-2xl flex-1 px-4 py-6">
+        <main id="conteudo" className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 lg:max-w-6xl lg:px-8 lg:py-8">
           {children}
         </main>
         <AppFooter />

@@ -1,5 +1,6 @@
-import { ExternalLink, Lock } from "lucide-react";
+import { BookMarked, ExternalLink, Phone } from "lucide-react";
 import { ContentIcon, getIcon } from "@/content/icons";
+import Badge from "@/components/ui/Badge";
 import Callout from "@/components/ui/Callout";
 import Checklist from "@/components/ui/Checklist";
 import ContentPending from "@/components/ui/ContentPending";
@@ -8,6 +9,8 @@ import Expandable from "@/components/ui/Expandable";
 import Steps from "@/components/ui/Steps";
 import TopicCard from "@/components/ui/TopicCard";
 import ExamSearch from "./ExamSearch";
+import InteractiveChecklist from "./InteractiveChecklist";
+import Tabs from "./Tabs";
 
 function Card({ block }) {
   const danger = block.tone === "danger";
@@ -16,6 +19,11 @@ function Card({ block }) {
     <section
       className={`rounded-cartao border bg-superficie p-4 shadow-cartao ${danger ? "border-alerta-200" : "border-borda"}`}
     >
+      {block.badge && (
+        <div className="mb-1">
+          <Badge type={block.badge} />
+        </div>
+      )}
       {block.title && (
         <h2 className="mb-2 flex items-center gap-2 text-lg font-extrabold text-rosa-800">
           <ContentIcon
@@ -54,39 +62,121 @@ function Links({ title, items }) {
     <section className="space-y-2">
       {title && <h2 className="text-lg font-extrabold text-rosa-800">{title}</h2>}
       <ul className="space-y-2">
-        {items.map((link) => (
-          <li key={link.href + link.label}>
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-cartao border border-borda bg-superficie p-4 hover:border-rosa-300 hover:bg-rosa-50"
-            >
-              <span className="min-w-0 flex-1">
-                <span className="block font-bold text-rosa-700">{link.label}</span>
-                {link.description && (
-                  <span className="block text-sm text-texto-suave">{link.description}</span>
+        {items.map((link) => {
+          const isPhone = link.href.startsWith("tel:");
+          return (
+            <li key={link.href + link.label}>
+              <a
+                href={link.href}
+                {...(isPhone ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                className="flex items-center gap-3 rounded-cartao border border-borda bg-superficie p-4 hover:border-rosa-300 hover:bg-rosa-50"
+              >
+                {isPhone && <Phone aria-hidden="true" className="size-5 shrink-0 text-rosa-600" />}
+                <span className="min-w-0 flex-1">
+                  <span className="block font-bold text-rosa-700">{link.label}</span>
+                  {link.description && (
+                    <span className="block text-sm text-texto-suave">{link.description}</span>
+                  )}
+                </span>
+                {!isPhone && (
+                  <>
+                    <ExternalLink aria-hidden="true" className="size-5 shrink-0 text-rosa-500" />
+                    <span className="sr-only">(abre em nova aba)</span>
+                  </>
                 )}
-              </span>
-              <ExternalLink aria-hidden="true" className="size-5 shrink-0 text-rosa-500" />
-              <span className="sr-only">(abre em nova aba)</span>
-            </a>
-          </li>
-        ))}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
 }
 
-function ComingSoon({ label }) {
+function ExpandableItemContent({ item }) {
   return (
-    <div className="flex flex-col items-center gap-1 rounded-cartao border-2 border-dashed border-rosa-300 bg-rosa-50 p-4 text-center">
-      <span className="inline-flex items-center gap-2 font-bold text-rosa-700">
-        <Lock aria-hidden="true" className="size-5" />
-        {label}
-      </span>
-      <span className="text-sm text-texto-suave">Disponível em breve, com o cadastro no app.</span>
+    <div className="space-y-2">
+      {item.text && <p>{item.text}</p>}
+      {item.items &&
+        (item.numbered ? (
+          <ol className="list-decimal space-y-1 pl-6 marker:font-bold marker:text-rosa-700">
+            {item.items.map((text) => (
+              <li key={text}>{text}</li>
+            ))}
+          </ol>
+        ) : (
+          <Checklist items={item.items} />
+        ))}
+      {item.footer && (
+        <p className={`font-semibold ${item.urgent ? "text-alerta-700" : "text-rosa-800"}`}>
+          {item.footer}
+        </p>
+      )}
+      {item.note && (
+        <Callout variant="warning" title="Atenção">
+          {item.note}
+        </Callout>
+      )}
     </div>
+  );
+}
+
+/** Lista de perguntas com selo (Mito, Verdade, Atenção…). Usada também em /duvidas. */
+export function MythList({ items }) {
+  return (
+    <div className="space-y-3">
+      {items.map((item) => (
+        <Expandable
+          key={item.question}
+          title={`"${item.question}"`}
+          badge={<Badge type={item.verdict}>{item.label}</Badge>}
+        >
+          <p>{item.text}</p>
+        </Expandable>
+      ))}
+    </div>
+  );
+}
+
+/** "Fontes desta seção" — fica fechado para não pesar a leitura. */
+export function Sources({ items }) {
+  return (
+    <Expandable icon={BookMarked} title="Fontes desta seção">
+      <ul className="space-y-2 text-sm">
+        {items.map((source) => (
+          <li key={source.text}>
+            {source.text}{" "}
+            {source.href && (
+              <a
+                href={source.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-rosa-700 underline"
+              >
+                Acessar<span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-sm text-texto-suave">
+        As recomendações podem ser atualizadas; confirme sempre as orientações com a sua equipe de
+        saúde.
+      </p>
+    </Expandable>
+  );
+}
+
+function Levels({ items }) {
+  return (
+    <ul className="space-y-2 rounded-cartao border border-borda bg-superficie p-4 shadow-cartao">
+      {items.map((item) => (
+        <li key={item.badge}>
+          <Badge type={item.badge} />
+          <p className="mt-1">{item.text}</p>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -94,6 +184,8 @@ function renderBlock(block) {
   switch (block.type) {
     case "text":
       return <p>{block.text}</p>;
+    case "heading":
+      return <h2 className="text-lg font-extrabold text-rosa-800">{block.text}</h2>;
     case "card":
       return <Card block={block} />;
     case "callout":
@@ -121,9 +213,14 @@ function renderBlock(block) {
       return (
         <div className="space-y-3">
           {block.items.map((item) => (
-            <Expandable key={item.title} icon={getIcon(block.icon)} title={item.title}>
-              {item.text && <p>{item.text}</p>}
-              {item.items && <Checklist items={item.items} />}
+            <Expandable
+              key={item.title}
+              icon={getIcon(item.icon ?? block.icon)}
+              title={item.title}
+              subtitle={item.subtitle}
+              badge={item.badge && <Badge type={item.badge} />}
+            >
+              <ExpandableItemContent item={item} />
             </Expandable>
           ))}
         </div>
@@ -132,6 +229,31 @@ function renderBlock(block) {
       return <Timeline items={block.items} />;
     case "examSearch":
       return <ExamSearch items={block.items} />;
+    case "checklist":
+      return (
+        <InteractiveChecklist
+          id={block.id}
+          title={block.title}
+          badge={block.badge}
+          items={block.items}
+        />
+      );
+    case "tabs":
+      return (
+        <Tabs
+          label={block.label}
+          tabs={block.tabs.map((tab) => ({
+            label: tab.label,
+            content: <Blocks blocks={tab.blocks} />,
+          }))}
+        />
+      );
+    case "levels":
+      return <Levels items={block.items} />;
+    case "myths":
+      return <MythList items={block.items} />;
+    case "sources":
+      return <Sources items={block.items} />;
     case "links":
       return <Links title={block.title} items={block.items} />;
     case "topicLink":
@@ -147,8 +269,6 @@ function renderBlock(block) {
       return <EmergencyButton />;
     case "pending":
       return <ContentPending topic={block.topic} />;
-    case "comingSoon":
-      return <ComingSoon label={block.label} />;
     default:
       return null;
   }
